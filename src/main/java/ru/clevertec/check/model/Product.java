@@ -11,9 +11,6 @@ public class Product {
     private Integer quantityInStock;
     private Boolean wholesaleProduct;
 
-    public Product() {
-    }
-
     public Product(Long id,
                    String description,
                    BigDecimal price,
@@ -26,13 +23,13 @@ public class Product {
         this.wholesaleProduct = wholesaleProduct;
     }
 
-//    public Product(Product product) {
-//        this.id = product.id;
-//        this.price = product.price;
-//        this.description = product.description;
-//        this.quantityInStock = product.quantityInStock;
-//        this.wholesaleProduct = product.wholesaleProduct;
-//    }
+    public Product(Product product) {
+        this.id = product.id;
+        this.price = product.price;
+        this.description = product.description;
+        this.quantityInStock = product.quantityInStock;
+        this.wholesaleProduct = product.wholesaleProduct;
+    }
 
     public Long getId() {
         return id;
@@ -46,16 +43,8 @@ public class Product {
         return description;
     }
 
-    public void setDescription(String description) {
-        this.description = description;
-    }
-
     public BigDecimal getPrice() {
         return price;
-    }
-
-    public void setPrice(BigDecimal price) {
-        this.price = price;
     }
 
     public Integer getQuantityInStock() {
@@ -68,10 +57,6 @@ public class Product {
 
     public Boolean getWholesaleProduct() {
         return wholesaleProduct;
-    }
-
-    public void setWholesaleProduct(Boolean wholesaleProduct) {
-        this.wholesaleProduct = wholesaleProduct;
     }
 
     @Override

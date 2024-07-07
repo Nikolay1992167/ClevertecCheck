@@ -7,13 +7,10 @@ public class DiscountCard {
 
     private Long id;
     private Integer number;
-    private Integer discountAmount;
+    private Byte discountAmount;
     private BigDecimal balance;
 
-    public DiscountCard() {
-    }
-
-    public DiscountCard(Long id, Integer number, Integer discountAmount, BigDecimal balance) {
+    public DiscountCard(Long id, Integer number, Byte discountAmount, BigDecimal balance) {
         this.id = id;
         this.number = number;
         this.discountAmount = discountAmount;
@@ -32,24 +29,8 @@ public class DiscountCard {
         return number;
     }
 
-    public void setNumber(Integer number) {
-        this.number = number;
-    }
-
-    public Integer getDiscountAmount() {
+    public Byte getDiscountAmount() {
         return discountAmount;
-    }
-
-    public void setDiscountAmount(Integer discountAmount) {
-        this.discountAmount = discountAmount;
-    }
-
-    public BigDecimal getBalance() {
-        return balance;
-    }
-
-    public void setBalance(BigDecimal balance) {
-        this.balance = balance;
     }
 
     @Override
@@ -75,11 +56,15 @@ public class DiscountCard {
         return Objects.hash(id, number, discountAmount, balance);
     }
 
+    public static Builder builder() {
+        return new Builder();
+    }
+
     public static class Builder {
 
         private Long id;
         private Integer number;
-        private Integer discountAmount;
+        private Byte discountAmount;
         private BigDecimal balance;
 
         public Builder id(Long id) {
@@ -92,7 +77,7 @@ public class DiscountCard {
             return this;
         }
 
-        public Builder discountAmount(Integer discountAmount) {
+        public Builder discountAmount(Byte discountAmount) {
             this.discountAmount = discountAmount;
             return this;
         }
