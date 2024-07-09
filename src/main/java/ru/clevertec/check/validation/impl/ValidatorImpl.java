@@ -29,6 +29,18 @@ public class ValidatorImpl implements Validator<String[]> {
         checkArgs(args);
     }
 
+    @Override
+    public void validatePathArgs(String[] args) {
+        boolean pathToFileExists = Arrays.stream(args)
+                .anyMatch(arg -> arg.contains("pathToFile"));
+        boolean saveToFileExists = Arrays.stream(args)
+                .anyMatch(arg -> arg.contains("saveToFile"));
+
+        if (!pathToFileExists || !saveToFileExists) {
+            throw new ValidationException();
+        }
+    }
+
     private void checkExistAnyProducts(String[] args) {
         if (Arrays.stream(args)
                 .noneMatch(arg -> arg.matches("(\\d+--?\\d+)"))) {

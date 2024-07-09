@@ -16,6 +16,10 @@ import java.nio.file.Paths;
 
 public class MainOrderImpl implements MainOrder {
 
+    /**
+     * Path to the saved file
+     */
+    private final String filePath;
     private final ArgMapper argMapper;
     private final PrintService printService;
     private final MainOrderController orderController;
@@ -24,17 +28,15 @@ public class MainOrderImpl implements MainOrder {
     public MainOrderImpl(ArgMapper argMapper,
                                   PrintService printService,
                                   MainOrderController orderController,
-                                  Validator<String[]> validator) {
+                                  Validator<String[]> validator,
+                                  String filePath) {
         this.argMapper = argMapper;
         this.printService = printService;
         this.orderController = orderController;
         this.validator = validator;
+        this.filePath = filePath;
     }
 
-    /**
-     * Path to the saved file
-     */
-    private final String filePath = "./result.csv";
 
     /**
      * Запускает процесс обработки заказа из аргументов

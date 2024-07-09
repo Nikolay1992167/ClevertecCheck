@@ -7,38 +7,26 @@
 
 #### ЗАДАНИЕ:
 
-#### Тестовое задание 1:
+#### Тестовое задание 2:
 
-Приложение должно запускаться с помощью консольной команды:
-java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx
-balanceDebitCard=xxxx
-где:
-id - идентификатор товара (см. Таблицу 1)
-quantity - количество товара
-discountCard=xxxx - название и номер дисконтной карты (см. Таблицу 2)
-balanceDebitCard=xxxx - баланс на дебетовой карте
-Примечание:
-● Название и путь CSV-файла: result.csv в корне проекта
-● всё указываем через пробел
-● id-quantity - добавляем префикс id-(количество товара). В наборе параметров
-должна быть минимум одна такая связка "id-quantity"
-● discountCard=xxxx - добавляем префикс discountCard=(любые четыре цифры)
-● balanceDebitCard=xxxx - указываем префикс balanceDebitCard=(любая сумма
-на счете). Обязательно должна присутствовать. Баланс может быть как и с
-двумя знаками после запятой, так и отрицательный
-ВАЖНО! id могут повторяться: 1-3 2-5 1-1 тоже, что и 1-4 2-5
-ВАЖНО! xxxx - для числа с плавающей точкой разделитель точка
-Пример: 1.12
+13.Реализовать считывание списка товаров из внешнего файла и сохранение данных чека в указанный CSV-файл на вход
+добавлены параметры pathToFile=xxxx и saveToFile=xxxx
+* pathToFile - включает относительный (от корневой директории проекта) путь + название файла с расширением (всегда
+присутствует в заданном формате)
+* saveToFile - включает относительный (от корневой директории проекта) путь + название файла с расширением
+* ВАЖНО! если не передан аргумент - pathToFile- ошибку сохранить в result.csv (если передан saveToFile, тогда сохранить 
+по пути из saveToFile)
+* ВАЖНО! если не передан аргумент - saveToFile- ошибку сохранить в result.csv
 
-Пример:
-java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 3-1 2-5 5-1 discountCard=1111
-balanceDebitCard=100
-По команде выше должен сформироваться CSV-файл (result.csv) в корне проекта, содержащий в себе список товаров и их
-количество с ценой, а также рассчитанную сумму с учетом скидки по предъявленной карте, если она есть.
-Расшифровка команды: (3-1) 3 - это товар с id = 3, 1 - количество (1шт);
-тоже самое с (2-5) id=2 в количестве 5 штук, (5-1) id=5 - одна штука и т. д.;
-discountCard=1111 - означает, что была предъявлена скидочная карта с номером 1111. Необходимо продублировать чек в
-консоль.
+* Приложение должно запускаться с помощью консольной команды:
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx
+  balanceDebitCard=xxxx pathToFile=XXXX saveToFile=xxxx
+* Пример с ошибкой 1: должен создаться файл result.csv в корне проекта с ошибкой BAD REQUEST:
+  java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 discountCard=1111
+  balanceDebitCard=100 pathToFile=./products.csv
+* Пример с ошибкой 2: должен создаться файл error_result.csv в корне проекта с ошибкой BAD REQUEST:
+  java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 discountCard=1111
+  balanceDebitCard=12.1 saveToFile=./error_result.csv
 </details>
 
 <details>
@@ -58,10 +46,9 @@ discountCard=1111 - означает, что была предъявлена с�
 </strong></summary>
 
 * Скачайте проект с gitHub:
-    * https://github.com/NortinPowers/vadarod-test-task.git
+    * https://github.com/Nikolay1992167/ClevertecCheck.git
 * Откройте терминал или командную строку и перейдите в директорию вашего проекта
 * Соберите jar-файл с помощью комманды сборщика ```javac -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java```
-
 </details>
 
 <details>
@@ -69,12 +56,8 @@ discountCard=1111 - означает, что была предъявлена с�
   Валидные команды
 </strong></summary>
 
-      ``` 
-      java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 1-2 3-5 14-10 discountCard=1111 balanceDebitCard=100.01
-      java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 10-7 11-2 discountCard=5555 balanceDebitCard=111
-      java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 3-3 2-1 balanceDebitCard=111.11
-      ```
-
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 4-4 discountCard=1111 balanceDebitCard=100.01 pathToFile=./src/main/resources/products.csv saveToFile=./result.csv
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 4-4 balanceDebitCard=100.01 pathToFile=./src/main/resources/products.csv saveToFile=./result.csv
 </details>
 
 <details>
@@ -82,19 +65,19 @@ discountCard=1111 - означает, что была предъявлена с�
   Команды с ошибками
 </strong></summary>
 
-      ``` 
-      java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 1-24 10-8 discountCard=1111 balanceDebitCard=50
-      java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 1-4 10-2 discountCard=1111 balanceDebitCard=10
-      java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java discountCard=1111 balanceDebitCard=10
-      ```
+* Не достаточно средств (NOT ENOUGH MONEY):
+*  java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 balanceDebitCard=5.55 pathToFile=./src/main/resources/products.csv saveToFile=./error_result.csv
 
-</details>
+* Не передан баланс карты (BAD REQUEST):
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 pathToFile=./src/main/resources/products.csv saveToFile=./error_result.csv
 
-<details>
- <summary><strong>
-  Результат
-</strong></summary>
+* Не передано ни одного продукта (BAD REQUEST):
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java discountCard=2222 balanceDebitCard=50.55 pathToFile=./src/main/resources/products.csv saveToFile=./error_result.csv
 
-result.csv в корне проекта.
+* Не передан аргумент - pathToFile:
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 balanceDebitCard=50.55 saveToFile=./result.csv
+
+* Не передан аргумент - saveToFile:
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 balanceDebitCard=205.55 pathToFile=./src/main/resources/products.csv
 
 </details>

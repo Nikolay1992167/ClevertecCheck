@@ -24,12 +24,6 @@ public class ProductServiceImpl implements ProductService {
         this.productMapper = productMapper;
     }
 
-    /**
-     * Метод уменьшает количество продуктов в DB и возвращает обработанный продукт
-     *
-     * @param productDtoList Список идентификаторов продуктов с количеством
-     * @return Список с информацией по продуктам
-     */
     @Override
     public List<ProductInfo> subtractCountAndGet(List<ProductDto> productDtoList) {
         Map<Long, Integer> idCountMap = productDtoList.stream()

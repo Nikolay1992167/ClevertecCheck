@@ -1,6 +1,7 @@
 package main.java.ru.clevertec.check.config;
 
 import main.java.ru.clevertec.check.controller.MainOrderController;
+import main.java.ru.clevertec.check.dto.CommandLineArgumentContainer;
 import main.java.ru.clevertec.check.factory.CheckFactory;
 import main.java.ru.clevertec.check.factory.impl.CheckFactoryImpl;
 import main.java.ru.clevertec.check.mapper.ArgMapper;
@@ -26,17 +27,17 @@ public class ApplicationBuilder {
 
     private final MainOrder mainOrder;
 
-    private ApplicationBuilder() {
+    private ApplicationBuilder(String readFromFilePath, String saveToFilePath) {
         ArgMapper argMapper = new ArgMapper();
         PrintService printService = new PrintServiceImpl();
 
-        ProductRepository productRepository = RepositoryConfig.getProductRepository(
-                "./src/main/resources/products.csv");
+        ProductRepository productRepository = RepositoryConfig.getProductRepository(readFromFilePath);
         DiscountCardRepository discountCardRepository = RepositoryConfig.getDiscountCardRepository(
                 "./src/main/resources/discountCards.csv");
 
         MainOrderController mainOrderController = getMainOrderController(discountCardRepository, productRepository);
-        mainOrder = new MainOrderImpl(argMapper, printService, mainOrderController, new ValidatorImpl());
+
+        mainOrder = new MainOrderImpl(argMapper, printService, mainOrderController, new ValidatorImpl(), saveToFilePath);
     }
 
     private MainOrderController getMainOrderController(DiscountCardRepository discountCardRepository, ProductRepository productRepository) {
@@ -51,6 +52,10 @@ public class ApplicationBuilder {
     }
 
     public static void run(String[] args) {
-        new ApplicationBuilder().mainOrder.processOrder(args);
+        CommandLineArgumentContainer commandLineArgumentContainer = CommandLineArgumentResolver.splitArgs(args);
+        ApplicationBuilder applicationBuilder = new ApplicationBuilder(
+                commandLineArgumentContainer.getReadFromFilePath(), commandLineArgumentContainer.getSaveToFilePath());
+
+        applicationBuilder.mainOrder.processOrder(commandLineArgumentContainer.getAppArguments());
     }
 }

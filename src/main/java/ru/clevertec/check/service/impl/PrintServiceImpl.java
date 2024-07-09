@@ -57,12 +57,9 @@ public class PrintServiceImpl implements PrintService {
             if (!file.exists() && !file.createNewFile()) {
                 throw new FileCreationException();
             }
-
         } catch (IOException e) {
             throw new FileCreationException();
-
         }
-
         return file;
     }
 }
