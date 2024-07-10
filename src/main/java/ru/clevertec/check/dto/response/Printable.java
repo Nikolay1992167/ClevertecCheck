@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.dto.response;
+package ru.clevertec.check.dto.response;
 
 import java.io.IOException;
 import java.io.Writer;

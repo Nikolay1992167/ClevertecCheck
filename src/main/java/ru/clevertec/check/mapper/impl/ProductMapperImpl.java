@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check.mapper.impl;
+package ru.clevertec.check.mapper.impl;
 
-import main.java.ru.clevertec.check.dto.ProductInfo;
-import main.java.ru.clevertec.check.mapper.ProductMapper;
-import main.java.ru.clevertec.check.model.Product;
+import ru.clevertec.check.dto.ProductInfo;
+import ru.clevertec.check.mapper.ProductMapper;
+import ru.clevertec.check.model.Product;
 
 import java.math.RoundingMode;
 

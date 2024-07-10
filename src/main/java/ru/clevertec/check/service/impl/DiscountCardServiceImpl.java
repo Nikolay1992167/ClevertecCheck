@@ -1,10 +1,10 @@
-package main.java.ru.clevertec.check.service.impl;
+package ru.clevertec.check.service.impl;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
-import main.java.ru.clevertec.check.dto.request.DiscountCardDto;
-import main.java.ru.clevertec.check.mapper.DiscountCardMapper;
-import main.java.ru.clevertec.check.repository.DiscountCardRepository;
-import main.java.ru.clevertec.check.service.DiscountCardService;
+import ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.request.DiscountCardDto;
+import ru.clevertec.check.mapper.DiscountCardMapper;
+import ru.clevertec.check.repository.DiscountCardRepository;
+import ru.clevertec.check.service.DiscountCardService;
 
 public class DiscountCardServiceImpl implements DiscountCardService {
 

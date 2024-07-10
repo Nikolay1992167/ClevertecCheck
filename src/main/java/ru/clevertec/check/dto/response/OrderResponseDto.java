@@ -1,12 +1,12 @@
-package main.java.ru.clevertec.check.dto.response;
+package ru.clevertec.check.dto.response;
 
 import java.io.IOException;
 import java.io.Writer;
 import java.math.BigDecimal;
 
 import static java.math.RoundingMode.HALF_UP;
-import static main.java.ru.clevertec.check.util.Constants.CURRENCY;
-import static main.java.ru.clevertec.check.util.Constants.DELIMITER;
+import static ru.clevertec.check.util.Constants.CURRENCY;
+import static ru.clevertec.check.util.Constants.DELIMITER;
 
 public class OrderResponseDto implements Printable {
 

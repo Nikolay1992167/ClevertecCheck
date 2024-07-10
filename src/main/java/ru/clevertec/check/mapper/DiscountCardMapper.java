@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check.mapper;
+package ru.clevertec.check.mapper;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
-import main.java.ru.clevertec.check.dto.request.DiscountCardDto;
-import main.java.ru.clevertec.check.model.DiscountCard;
+import ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.request.DiscountCardDto;
+import ru.clevertec.check.model.DiscountCard;
 
 import java.math.BigDecimal;
 

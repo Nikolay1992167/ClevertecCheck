@@ -1,9 +1,9 @@
-package main.java.ru.clevertec.check.service.impl;
+package ru.clevertec.check.service.impl;
 
-import main.java.ru.clevertec.check.dto.response.Printable;
-import main.java.ru.clevertec.check.exception.FileCreationException;
-import main.java.ru.clevertec.check.exception.PrintableException;
-import main.java.ru.clevertec.check.service.PrintService;
+import ru.clevertec.check.dto.response.Printable;
+import ru.clevertec.check.exception.FileCreationException;
+import ru.clevertec.check.exception.PrintableException;
+import ru.clevertec.check.service.PrintService;
 
 import java.io.BufferedWriter;
 import java.io.File;
@@ -23,7 +23,7 @@ public class PrintServiceImpl implements PrintService {
      */
     @Override
     public void printToFile(Path filepath, Printable printable) {
-        File file = creteFile(filepath);
+        File file = createFile(filepath);
 
         try (Writer writer = new BufferedWriter(new FileWriter(file))) {
             printable.print(writer);
@@ -50,7 +50,7 @@ public class PrintServiceImpl implements PrintService {
         }
     }
 
-    private File creteFile(Path path) {
+    private File createFile(Path path) {
         File file = path.toFile();
 
         try {

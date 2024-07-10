@@ -1,16 +1,16 @@
-package main.java.ru.clevertec.check.factory.impl;
+package ru.clevertec.check.factory.impl;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
-import main.java.ru.clevertec.check.dto.ProductInfo;
-import main.java.ru.clevertec.check.dto.response.Check;
-import main.java.ru.clevertec.check.dto.response.CheckBody;
-import main.java.ru.clevertec.check.dto.response.CheckTitle;
-import main.java.ru.clevertec.check.dto.response.CheckTotal;
-import main.java.ru.clevertec.check.dto.response.DiscountCheck;
-import main.java.ru.clevertec.check.dto.response.OrderResponseDto;
-import main.java.ru.clevertec.check.dto.response.PrintableDiscountCard;
-import main.java.ru.clevertec.check.exception.BalanceNotAvailableException;
-import main.java.ru.clevertec.check.factory.CheckFactory;
+import ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.ProductInfo;
+import ru.clevertec.check.dto.response.Check;
+import ru.clevertec.check.dto.response.CheckBody;
+import ru.clevertec.check.dto.response.CheckTitle;
+import ru.clevertec.check.dto.response.CheckTotal;
+import ru.clevertec.check.dto.response.DiscountCheck;
+import ru.clevertec.check.dto.response.OrderResponseDto;
+import ru.clevertec.check.dto.response.PrintableDiscountCard;
+import ru.clevertec.check.exception.BalanceNotAvailableException;
+import ru.clevertec.check.factory.CheckFactory;
 
 import java.math.BigDecimal;
 import java.util.List;

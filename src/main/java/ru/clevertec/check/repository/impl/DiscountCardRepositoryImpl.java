@@ -1,24 +1,44 @@
-package main.java.ru.clevertec.check.repository.impl;
+package ru.clevertec.check.repository.impl;
 
-import main.java.ru.clevertec.check.model.DiscountCard;
-import main.java.ru.clevertec.check.repository.DiscountCardRepository;
+import ru.clevertec.check.exception.DataException;
+import ru.clevertec.check.model.DiscountCard;
+import ru.clevertec.check.repository.DiscountCardRepository;
 
-import java.util.Map;
-import java.util.Objects;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.Optional;
 
 public class DiscountCardRepositoryImpl implements DiscountCardRepository {
 
-    private final Map<Long, DiscountCard> discountCardMap;
+    private final Connection connection;
 
-    public DiscountCardRepositoryImpl(Map<Long, DiscountCard> discountCardMap) {
-        this.discountCardMap = discountCardMap;
+    public static final String SELECT_DISCOUNT_CARD_BY_ID = "SELECT * FROM discount_card WHERE id = ?";
+
+    public DiscountCardRepositoryImpl(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
     public Optional<DiscountCard> findByNumber(Integer number) {
-        return discountCardMap.values().stream()
-                .filter(card -> Objects.equals(card.getNumber(), number))
-                .findFirst();
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_DISCOUNT_CARD_BY_ID)
+        ) {
+            statement.setLong(1, number);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    DiscountCard discountCard = DiscountCard.builder()
+                            .id(resultSet.getLong("id"))
+                            .discountAmount(resultSet.getByte("amount"))
+                            .number(resultSet.getInt("number"))
+                            .build();
+                    return Optional.of(discountCard);
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataException();
+        }
     }
 }

@@ -1,15 +1,15 @@
-package main.java.ru.clevertec.check.starter.impl;
+package ru.clevertec.check.starter.impl;
 
-import main.java.ru.clevertec.check.controller.MainOrderController;
-import main.java.ru.clevertec.check.dto.request.Bucket;
-import main.java.ru.clevertec.check.dto.response.Check;
-import main.java.ru.clevertec.check.dto.response.Printable;
-import main.java.ru.clevertec.check.exception.AbstractPrintableException;
-import main.java.ru.clevertec.check.exception.FileCreationException;
-import main.java.ru.clevertec.check.mapper.ArgMapper;
-import main.java.ru.clevertec.check.service.PrintService;
-import main.java.ru.clevertec.check.starter.MainOrder;
-import main.java.ru.clevertec.check.validation.Validator;
+import ru.clevertec.check.controller.MainOrderController;
+import ru.clevertec.check.dto.request.Bucket;
+import ru.clevertec.check.dto.response.Check;
+import ru.clevertec.check.dto.response.Printable;
+import ru.clevertec.check.exception.FileCreationException;
+import ru.clevertec.check.mapper.ArgMapper;
+import ru.clevertec.check.service.PrintService;
+import ru.clevertec.check.exception.AbstractPrintableException;
+import ru.clevertec.check.starter.MainOrder;
+import ru.clevertec.check.validation.Validator;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;

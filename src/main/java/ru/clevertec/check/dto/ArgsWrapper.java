@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.dto;
+package ru.clevertec.check.dto;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -8,7 +8,6 @@ import java.util.Map;
 
 public class ArgsWrapper implements CommandLineArgumentContainer {
 
-    public final static String READ_FROM_FILE_PATH = "pathToFile";
     public final static String SAVE_TO_FILE_PATH = "saveToFile";
 
     private final List<String> appArgs = new ArrayList<>();
@@ -23,13 +22,13 @@ public class ArgsWrapper implements CommandLineArgumentContainer {
         return appArgs.toArray(String[]::new);
     }
 
-    public void putProperty(String key, String value) {
-        properties.put(key, value);
+    @Override
+    public Map<String, String> getProperties() {
+        return properties;
     }
 
-    @Override
-    public String getReadFromFilePath() {
-        return properties.get(READ_FROM_FILE_PATH);
+    public void putProperty(String key, String value) {
+        properties.put(key, value);
     }
 
     @Override

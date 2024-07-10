@@ -1,13 +1,13 @@
-package main.java.ru.clevertec.check.service.impl;
+package ru.clevertec.check.service.impl;
 
-import main.java.ru.clevertec.check.dto.ProductInfo;
-import main.java.ru.clevertec.check.dto.request.ProductDto;
-import main.java.ru.clevertec.check.exception.NotFoundException;
-import main.java.ru.clevertec.check.exception.QuantityInStockIsNotAvailableException;
-import main.java.ru.clevertec.check.mapper.ProductMapper;
-import main.java.ru.clevertec.check.model.Product;
-import main.java.ru.clevertec.check.repository.ProductRepository;
-import main.java.ru.clevertec.check.service.ProductService;
+import ru.clevertec.check.dto.ProductInfo;
+import ru.clevertec.check.dto.request.ProductDto;
+import ru.clevertec.check.exception.NotFoundException;
+import ru.clevertec.check.exception.QuantityInStockIsNotAvailableException;
+import ru.clevertec.check.mapper.ProductMapper;
+import ru.clevertec.check.model.Product;
+import ru.clevertec.check.repository.ProductRepository;
+import ru.clevertec.check.service.ProductService;
 
 import java.util.List;
 import java.util.Map;
@@ -37,7 +37,6 @@ public class ProductServiceImpl implements ProductService {
 
         return allById.stream()
                 .map(product -> updateQuantityInStock(product, idCountMap.get(product.getId())))
-                .map(productRepository::saveAndFlush)
                 .map(product -> productMapper.toGoodInfo(product, idCountMap.get(product.getId())))
                 .toList();
     }

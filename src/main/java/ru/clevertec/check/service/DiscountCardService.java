@@ -1,7 +1,7 @@
-package main.java.ru.clevertec.check.service;
+package ru.clevertec.check.service;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
-import main.java.ru.clevertec.check.dto.request.DiscountCardDto;
+import ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.request.DiscountCardDto;
 
 public interface DiscountCardService {
 

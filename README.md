@@ -7,26 +7,20 @@
 
 #### ЗАДАНИЕ:
 
-#### Тестовое задание 2:
+#### Тестовое задание 3:
 
-13.Реализовать считывание списка товаров из внешнего файла и сохранение данных чека в указанный CSV-файл на вход
-добавлены параметры pathToFile=xxxx и saveToFile=xxxx
-* pathToFile - включает относительный (от корневой директории проекта) путь + название файла с расширением (всегда
-присутствует в заданном формате)
-* saveToFile - включает относительный (от корневой директории проекта) путь + название файла с расширением
-* ВАЖНО! если не передан аргумент - pathToFile- ошибку сохранить в result.csv (если передан saveToFile, тогда сохранить 
-по пути из saveToFile)
-* ВАЖНО! если не передан аргумент - saveToFile- ошибку сохранить в result.csv
-
-* Приложение должно запускаться с помощью консольной команды:
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java id-quantity discountCard=xxxx
-  balanceDebitCard=xxxx pathToFile=XXXX saveToFile=xxxx
-* Пример с ошибкой 1: должен создаться файл result.csv в корне проекта с ошибкой BAD REQUEST:
-  java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 discountCard=1111
-  balanceDebitCard=100 pathToFile=./products.csv
-* Пример с ошибкой 2: должен создаться файл error_result.csv в корне проекта с ошибкой BAD REQUEST:
-  java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 discountCard=1111
-  balanceDebitCard=12.1 saveToFile=./error_result.csv
+* В качестве DB использовать PostgreSQL.
+* Разрешено использовать только JDBC (org.postgresql.Driver).
+* Замена хранения исходных данных в файлах на хранение в таблицах PostgreSQL: product и discount_card.
+* Убран параметр pathToFile
+* Настройки подключения к БД передавать через аргументы командной строки на вход добавлены параметры: (Обязательные)
+datasource.url=ххх datasource.username=ххх datasource.password=ххх
+* Пример:
+* java -jar clevertec-check.jar 3-1 2-5 5-1 discountCard=1111 balanceDebitCard=100 saveToFile=./result.csv
+datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=postgres
+* DDL/DML операции должны храниться в файле src/main/resources/data.sql (но не использовать)
+* Покрыть функционал юнит-тестами (не менее 70 %).
+* Исходники разместить в присланном репозитории в ветке feature/entry-database
 </details>
 
 <details>
@@ -37,6 +31,7 @@
 #### При разработке были использованы:
 
 * Java 21
+* Gradle 8.5
 
 </details>
 
@@ -45,10 +40,13 @@
   Запуск проекта
 </strong></summary>
 
+* Необходимо создать базу данных PostgreSQL имеющую название check.
 * Скачайте проект с gitHub:
     * https://github.com/Nikolay1992167/ClevertecCheck.git
 * Откройте терминал или командную строку и перейдите в директорию вашего проекта
-* Соберите jar-файл с помощью комманды сборщика ```javac -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java```
+* Соберите jar-файл с помощью комманды сборщика ```gradle build```
+* Затем в командной строке перейти в директорию build/libs, где расположен clevertec-check.jar выполняем команду старта 
+* приложения.
 </details>
 
 <details>
@@ -56,8 +54,10 @@
   Валидные команды
 </strong></summary>
 
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 4-4 discountCard=1111 balanceDebitCard=100.01 pathToFile=./src/main/resources/products.csv saveToFile=./result.csv
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 4-4 balanceDebitCard=100.01 pathToFile=./src/main/resources/products.csv saveToFile=./result.csv
+* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 discountCard=1111 balanceDebitCard=100.01 
+saveToFile=./result.csv datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres 
+datasource.password=87654321
+* Username and password установите в соответствии  с вашими данными.
 </details>
 
 <details>
@@ -66,18 +66,25 @@
 </strong></summary>
 
 * Не достаточно средств (NOT ENOUGH MONEY):
-*  java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 balanceDebitCard=5.55 pathToFile=./src/main/resources/products.csv saveToFile=./error_result.csv
+*  java -jar clevertec-check.jar 3-1 2-5 5-1 discountCard=1111 balanceDebitCard=1 saveToFile=./error_result.csv 
+datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=87654321
 
 * Не передан баланс карты (BAD REQUEST):
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 pathToFile=./src/main/resources/products.csv saveToFile=./error_result.csv
+* java -jar clevertec-check.jar 3-1 2-5 5-1 discountCard=1111 saveToFile=./error_result.csv 
+* datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=87654321
 
 * Не передано ни одного продукта (BAD REQUEST):
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java discountCard=2222 balanceDebitCard=50.55 pathToFile=./src/main/resources/products.csv saveToFile=./error_result.csv
+* java -jar clevertec-check.jar discountCard=1111 balanceDebitCard=100 saveToFile=./error_result.csv datasource.url=jdbc:postgresql://localhost:5432/check datasource.username=postgres datasource.password=87654321
 
-* Не передан аргумент - pathToFile:
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 balanceDebitCard=50.55 saveToFile=./result.csv
+* Не переданы данные для подключения к базе данных:
+* java -jar clevertec-check.jar 3-1 2-5 5-1 discountCard=1111 balanceDebitCard=100 saveToFile=./result.csv
+</details>
 
-* Не передан аргумент - saveToFile:
-* java -cp src ./src/main/java/ru/clevertec/check/CheckRunner.java 1-1 2-2 3-3 18-20 discountCard=2222 balanceDebitCard=205.55 pathToFile=./src/main/resources/products.csv
+<details>
+ <summary><strong>
+  Тесты
+</strong></summary>
 
+* Тестами покрыто 70% классов согласно Coverage.
+* Запустить тесты можно с помощью команды ```./gradlew test```.
 </details>

@@ -1,6 +1,6 @@
-package main.java.ru.clevertec.check.exception;
+package ru.clevertec.check.exception;
 
-import main.java.ru.clevertec.check.dto.response.Printable;
+import ru.clevertec.check.dto.response.Printable;
 
 import java.io.IOException;
 import java.io.Writer;

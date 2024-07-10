@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check.factory;
+package ru.clevertec.check.factory;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
-import main.java.ru.clevertec.check.dto.ProductInfo;
-import main.java.ru.clevertec.check.dto.response.Check;
+import ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.ProductInfo;
+import ru.clevertec.check.dto.response.Check;
 
 import java.util.List;
 

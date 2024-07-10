@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.validation;
+package ru.clevertec.check.validation;
 
 public interface Validator<T> {
 

@@ -1,46 +1,59 @@
-package main.java.ru.clevertec.check.repository.impl;
+package ru.clevertec.check.repository.impl;
 
-import main.java.ru.clevertec.check.model.Product;
-import main.java.ru.clevertec.check.repository.ProductRepository;
+import ru.clevertec.check.exception.DataException;
+import ru.clevertec.check.exception.NotFoundException;
+import ru.clevertec.check.model.Product;
+import ru.clevertec.check.repository.ProductRepository;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
-import java.util.Map;
-import java.util.Objects;
+import java.util.Optional;
 
 public class ProductRepositoryImpl implements ProductRepository {
 
-    private final Map<Long, Product> goodMap;
+    private final Connection connection;
 
-    public ProductRepositoryImpl(Map<Long, Product> goodMap) {
-        this.goodMap = goodMap;
-    }
+    public static final String SELECT_PRODUCT_BY_ID = "SELECT * FROM product WHERE id = ?";
 
-    @Override
-    public Product saveAndFlush(Product good) {
-        if (good.getId() == null) {
-            Long id = goodMap.keySet().stream()
-                    .max(Long::compareTo)
-                    .orElse(1L);
-            good.setId(id);
-        }
-
-        goodMap.put(good.getId(), good);
-
-        return new Product(good);
+    public ProductRepositoryImpl(Connection connection) {
+        this.connection = connection;
     }
 
     @Override
     public List<Product> findAllById(Iterable<Long> longs) {
+
         List<Product> result = new ArrayList<>();
 
         longs.forEach(id ->
-                result.add(goodMap.get(id))
+                result.add(findByNumber(id).orElseThrow(NotFoundException::new))
         );
+        return result;
+    }
 
-        return result.stream()
-                .filter(Objects::nonNull)
-                .map(Product::new)
-                .toList();
+    private Optional<Product> findByNumber(Long id) {
+        try (PreparedStatement statement = connection.prepareStatement(SELECT_PRODUCT_BY_ID)
+        ) {
+            statement.setLong(1, id);
+            try (ResultSet resultSet = statement.executeQuery()) {
+                if (resultSet.next()) {
+                    Product product = Product.builder()
+                            .id(resultSet.getLong("id"))
+                            .description(resultSet.getString("description"))
+                            .price(resultSet.getBigDecimal("price"))
+                            .quantityInStock(resultSet.getInt("quantity_in_stock"))
+                            .wholesaleProduct(resultSet.getBoolean("wholesale_product"))
+                            .build();
+                    return Optional.of(product);
+                } else {
+                    return Optional.empty();
+                }
+            }
+        } catch (SQLException e) {
+            throw new DataException();
+        }
     }
 }

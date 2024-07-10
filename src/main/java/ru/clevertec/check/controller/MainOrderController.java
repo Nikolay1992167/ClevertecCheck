@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check.controller;
+package ru.clevertec.check.controller;
 
-import main.java.ru.clevertec.check.dto.request.Bucket;
-import main.java.ru.clevertec.check.dto.response.Check;
-import main.java.ru.clevertec.check.service.OrderService;
+import ru.clevertec.check.dto.request.Bucket;
+import ru.clevertec.check.dto.response.Check;
+import ru.clevertec.check.service.OrderService;
 
 public class MainOrderController {
 

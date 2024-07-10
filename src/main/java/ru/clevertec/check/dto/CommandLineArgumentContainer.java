@@ -1,10 +1,12 @@
-package main.java.ru.clevertec.check.dto;
+package ru.clevertec.check.dto;
+
+import java.util.Map;
 
 public interface CommandLineArgumentContainer {
 
     String[] getAppArguments();
 
-    String getReadFromFilePath();
+    Map<String, String> getProperties();
 
     String getSaveToFilePath();
 }

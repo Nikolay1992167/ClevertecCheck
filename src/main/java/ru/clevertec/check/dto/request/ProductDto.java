@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.dto.request;
+package ru.clevertec.check.dto.request;
 
 public record ProductDto(Long id, Integer quantity) {
 

@@ -1,7 +1,7 @@
-package main.java.ru.clevertec.check.service;
+package ru.clevertec.check.service;
 
-import main.java.ru.clevertec.check.dto.ProductInfo;
-import main.java.ru.clevertec.check.dto.request.ProductDto;
+import ru.clevertec.check.dto.ProductInfo;
+import ru.clevertec.check.dto.request.ProductDto;
 
 import java.util.List;
 

@@ -1,6 +1,6 @@
-package main.java.ru.clevertec.check.repository;
+package ru.clevertec.check.repository;
 
-import main.java.ru.clevertec.check.model.DiscountCard;
+import ru.clevertec.check.model.DiscountCard;
 
 import java.util.Optional;
 

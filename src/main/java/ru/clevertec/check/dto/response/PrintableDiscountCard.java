@@ -1,12 +1,12 @@
-package main.java.ru.clevertec.check.dto.response;
+package ru.clevertec.check.dto.response;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.BalancedDiscountCard;
 
 import java.io.IOException;
 import java.io.Writer;
 
-import static main.java.ru.clevertec.check.util.Constants.DELIMITER;
-import static main.java.ru.clevertec.check.util.Constants.PERCENTAGE;
+import static ru.clevertec.check.util.Constants.DELIMITER;
+import static ru.clevertec.check.util.Constants.PERCENTAGE;
 
 public class PrintableDiscountCard extends AbstractTitlePrintable {
 

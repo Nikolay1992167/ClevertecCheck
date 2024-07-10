@@ -1,39 +1,47 @@
-package main.java.ru.clevertec.check.config;
+package ru.clevertec.check.config;
 
-import main.java.ru.clevertec.check.controller.MainOrderController;
-import main.java.ru.clevertec.check.dto.CommandLineArgumentContainer;
-import main.java.ru.clevertec.check.factory.CheckFactory;
-import main.java.ru.clevertec.check.factory.impl.CheckFactoryImpl;
-import main.java.ru.clevertec.check.mapper.ArgMapper;
-import main.java.ru.clevertec.check.mapper.DiscountCardMapper;
-import main.java.ru.clevertec.check.mapper.ProductMapper;
-import main.java.ru.clevertec.check.mapper.impl.DiscountCardMapperImpl;
-import main.java.ru.clevertec.check.mapper.impl.ProductMapperImpl;
-import main.java.ru.clevertec.check.repository.DiscountCardRepository;
-import main.java.ru.clevertec.check.repository.ProductRepository;
-import main.java.ru.clevertec.check.service.DiscountCardService;
-import main.java.ru.clevertec.check.service.OrderService;
-import main.java.ru.clevertec.check.service.PrintService;
-import main.java.ru.clevertec.check.service.ProductService;
-import main.java.ru.clevertec.check.service.impl.DiscountCardServiceImpl;
-import main.java.ru.clevertec.check.service.impl.OrderServiceImpl;
-import main.java.ru.clevertec.check.service.impl.PrintServiceImpl;
-import main.java.ru.clevertec.check.service.impl.ProductServiceImpl;
-import main.java.ru.clevertec.check.starter.MainOrder;
-import main.java.ru.clevertec.check.starter.impl.MainOrderImpl;
-import main.java.ru.clevertec.check.validation.impl.ValidatorImpl;
+import ru.clevertec.check.controller.MainOrderController;
+import ru.clevertec.check.dto.CommandLineArgumentContainer;
+import ru.clevertec.check.factory.CheckFactory;
+import ru.clevertec.check.factory.impl.CheckFactoryImpl;
+import ru.clevertec.check.mapper.ArgMapper;
+import ru.clevertec.check.mapper.DiscountCardMapper;
+import ru.clevertec.check.mapper.ProductMapper;
+import ru.clevertec.check.mapper.impl.DiscountCardMapperImpl;
+import ru.clevertec.check.mapper.impl.ProductMapperImpl;
+import ru.clevertec.check.repository.DiscountCardRepository;
+import ru.clevertec.check.repository.ProductRepository;
+import ru.clevertec.check.repository.impl.DiscountCardRepositoryImpl;
+import ru.clevertec.check.repository.impl.ProductRepositoryImpl;
+import ru.clevertec.check.service.DiscountCardService;
+import ru.clevertec.check.service.OrderService;
+import ru.clevertec.check.service.PrintService;
+import ru.clevertec.check.service.ProductService;
+import ru.clevertec.check.service.impl.DiscountCardServiceImpl;
+import ru.clevertec.check.service.impl.OrderServiceImpl;
+import ru.clevertec.check.service.impl.PrintServiceImpl;
+import ru.clevertec.check.service.impl.ProductServiceImpl;
+import ru.clevertec.check.starter.MainOrder;
+import ru.clevertec.check.starter.impl.MainOrderImpl;
+import ru.clevertec.check.util.dbconnection.DatabaseConnection;
+import ru.clevertec.check.validation.impl.ValidatorImpl;
+
+import java.sql.Connection;
+import java.util.Map;
 
 public class ApplicationBuilder {
 
     private final MainOrder mainOrder;
 
-    private ApplicationBuilder(String readFromFilePath, String saveToFilePath) {
+    private ApplicationBuilder(String saveToFilePath, Map<String, String> properties) {
         ArgMapper argMapper = new ArgMapper();
+
         PrintService printService = new PrintServiceImpl();
 
-        ProductRepository productRepository = RepositoryConfig.getProductRepository(readFromFilePath);
-        DiscountCardRepository discountCardRepository = RepositoryConfig.getDiscountCardRepository(
-                "./src/main/resources/discountCards.csv");
+        Connection connection = DatabaseConnection.initializeDatabase(properties);
+
+        ProductRepository productRepository = new ProductRepositoryImpl(connection);
+        DiscountCardRepository discountCardRepository = new DiscountCardRepositoryImpl(connection);
 
         MainOrderController mainOrderController = getMainOrderController(discountCardRepository, productRepository);
 
@@ -53,8 +61,7 @@ public class ApplicationBuilder {
 
     public static void run(String[] args) {
         CommandLineArgumentContainer commandLineArgumentContainer = CommandLineArgumentResolver.splitArgs(args);
-        ApplicationBuilder applicationBuilder = new ApplicationBuilder(
-                commandLineArgumentContainer.getReadFromFilePath(), commandLineArgumentContainer.getSaveToFilePath());
+        ApplicationBuilder applicationBuilder = new ApplicationBuilder(commandLineArgumentContainer.getSaveToFilePath(), commandLineArgumentContainer.getProperties());
 
         applicationBuilder.mainOrder.processOrder(commandLineArgumentContainer.getAppArguments());
     }

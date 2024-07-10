@@ -1,14 +1,14 @@
-package main.java.ru.clevertec.check.service.impl;
+package ru.clevertec.check.service.impl;
 
-import main.java.ru.clevertec.check.dto.BalancedDiscountCard;
-import main.java.ru.clevertec.check.dto.ProductInfo;
-import main.java.ru.clevertec.check.dto.request.Bucket;
-import main.java.ru.clevertec.check.dto.request.ProductDto;
-import main.java.ru.clevertec.check.dto.response.Check;
-import main.java.ru.clevertec.check.factory.CheckFactory;
-import main.java.ru.clevertec.check.service.DiscountCardService;
-import main.java.ru.clevertec.check.service.OrderService;
-import main.java.ru.clevertec.check.service.ProductService;
+import ru.clevertec.check.dto.BalancedDiscountCard;
+import ru.clevertec.check.dto.ProductInfo;
+import ru.clevertec.check.dto.request.Bucket;
+import ru.clevertec.check.dto.request.ProductDto;
+import ru.clevertec.check.dto.response.Check;
+import ru.clevertec.check.factory.CheckFactory;
+import ru.clevertec.check.service.DiscountCardService;
+import ru.clevertec.check.service.OrderService;
+import ru.clevertec.check.service.ProductService;
 
 import java.util.List;
 import java.util.stream.Collectors;
@@ -28,7 +28,7 @@ public class OrderServiceImpl implements OrderService {
     }
 
     /**
-     * Метод, который делегирует обработку {@link main.java.ru.clevertec.check.model.Product} в {@link ProductService}
+     * Метод, который делегирует обработку {@link ru.clevertec.check.model.Product} в {@link ProductService}
      * и получает информацию о карте из {@link DiscountCardService}
      * и делегирует создание чека в {@link CheckFactory}
      *
@@ -41,7 +41,7 @@ public class OrderServiceImpl implements OrderService {
                 .collect(Collectors.collectingAndThen(Collectors.groupingBy(
                                 ProductDto::id, Collectors.reducing(0, ProductDto::quantity, Integer::sum)),
                         idQty -> idQty.entrySet().stream()
-                                .map(x -> new ProductDto(x.getKey(), x.getValue())).toList()));
+                                .map(x -> new ProductDto(x.getKey(), x.getValue())).toList().reversed()));
 
         List<ProductInfo> productInfos = productService.subtractCountAndGet(productDtos);
         BalancedDiscountCard discountCardDto = discountCardService.getWithBalance(bucket.discountCard());

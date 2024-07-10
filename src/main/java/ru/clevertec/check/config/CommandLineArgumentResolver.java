@@ -1,14 +1,14 @@
-package main.java.ru.clevertec.check.config;
+package ru.clevertec.check.config;
 
-import main.java.ru.clevertec.check.dto.ArgsWrapper;
-import main.java.ru.clevertec.check.dto.CommandLineArgumentContainer;
-import main.java.ru.clevertec.check.dto.response.Printable;
-import main.java.ru.clevertec.check.exception.AbstractPrintableException;
-import main.java.ru.clevertec.check.exception.FileCreationException;
-import main.java.ru.clevertec.check.service.PrintService;
-import main.java.ru.clevertec.check.service.impl.PrintServiceImpl;
-import main.java.ru.clevertec.check.validation.Validator;
-import main.java.ru.clevertec.check.validation.impl.ValidatorImpl;
+import ru.clevertec.check.dto.ArgsWrapper;
+import ru.clevertec.check.dto.CommandLineArgumentContainer;
+import ru.clevertec.check.dto.response.Printable;
+import ru.clevertec.check.exception.AbstractPrintableException;
+import ru.clevertec.check.exception.FileCreationException;
+import ru.clevertec.check.service.PrintService;
+import ru.clevertec.check.service.impl.PrintServiceImpl;
+import ru.clevertec.check.validation.Validator;
+import ru.clevertec.check.validation.impl.ValidatorImpl;
 
 import java.nio.file.Path;
 import java.nio.file.Paths;
@@ -32,12 +32,14 @@ public class CommandLineArgumentResolver {
         Arrays.stream(args)
                 .forEach(arg ->
                 {
-                    if (arg.startsWith("pathToFile")) {
-                        argsWrapper.putProperty(ArgsWrapper.READ_FROM_FILE_PATH, arg.split("=")[1]);
-
-                    } else if (arg.startsWith("saveToFile")) {
+                    if (arg.startsWith("saveToFile")) {
                         argsWrapper.putProperty(ArgsWrapper.SAVE_TO_FILE_PATH, arg.split("=")[1]);
-
+                    } else if (arg.startsWith("datasource.url")) {
+                        argsWrapper.putProperty("url", arg.split("=")[1]);
+                    } else if (arg.startsWith("datasource.username")) {
+                        argsWrapper.putProperty("username", arg.split("=")[1]);
+                    } else if (arg.startsWith("datasource.password")) {
+                        argsWrapper.putProperty("password", arg.split("=")[1]);
                     } else {
                         argsWrapper.addAppArg(arg);
                     }

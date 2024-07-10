@@ -1,6 +1,6 @@
-package main.java.ru.clevertec.check.service;
+package ru.clevertec.check.service;
 
-import main.java.ru.clevertec.check.dto.response.Printable;
+import ru.clevertec.check.dto.response.Printable;
 
 import java.nio.file.Path;
 

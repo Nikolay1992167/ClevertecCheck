@@ -1,6 +1,6 @@
-package main.java.ru.clevertec.check;
+package ru.clevertec.check;
 
-import main.java.ru.clevertec.check.config.ApplicationBuilder;
+import ru.clevertec.check.config.ApplicationBuilder;
 
 public class CheckRunner {
     public static void main(String[] args) {

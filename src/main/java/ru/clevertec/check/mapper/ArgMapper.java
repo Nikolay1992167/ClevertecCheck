@@ -1,8 +1,8 @@
-package main.java.ru.clevertec.check.mapper;
+package ru.clevertec.check.mapper;
 
-import main.java.ru.clevertec.check.dto.request.Bucket;
-import main.java.ru.clevertec.check.dto.request.DiscountCardDto;
-import main.java.ru.clevertec.check.dto.request.ProductDto;
+import ru.clevertec.check.dto.request.Bucket;
+import ru.clevertec.check.dto.request.DiscountCardDto;
+import ru.clevertec.check.dto.request.ProductDto;
 
 import java.util.Arrays;
 import java.util.List;

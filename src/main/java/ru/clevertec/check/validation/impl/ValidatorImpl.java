@@ -1,7 +1,7 @@
-package main.java.ru.clevertec.check.validation.impl;
+package ru.clevertec.check.validation.impl;
 
-import main.java.ru.clevertec.check.exception.ValidationException;
-import main.java.ru.clevertec.check.validation.Validator;
+import ru.clevertec.check.exception.ValidationException;
+import ru.clevertec.check.validation.Validator;
 
 import java.util.Arrays;
 import java.util.Objects;
@@ -31,12 +31,15 @@ public class ValidatorImpl implements Validator<String[]> {
 
     @Override
     public void validatePathArgs(String[] args) {
-        boolean pathToFileExists = Arrays.stream(args)
-                .anyMatch(arg -> arg.contains("pathToFile"));
         boolean saveToFileExists = Arrays.stream(args)
                 .anyMatch(arg -> arg.contains("saveToFile"));
-
-        if (!pathToFileExists || !saveToFileExists) {
+        boolean urlExists = Arrays.stream(args)
+                .anyMatch(arg -> arg.contains("datasource.url"));
+        boolean usernameExists = Arrays.stream(args)
+                .anyMatch(arg -> arg.contains("datasource.username"));
+        boolean passwordExists = Arrays.stream(args)
+                .anyMatch(arg -> arg.contains("datasource.password"));
+        if (!passwordExists || !usernameExists || !urlExists || !saveToFileExists) {
             throw new ValidationException();
         }
     }

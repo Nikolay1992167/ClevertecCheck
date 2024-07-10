@@ -1,4 +1,4 @@
-package main.java.ru.clevertec.check.dto;
+package ru.clevertec.check.dto;
 
 import java.math.BigDecimal;
 
