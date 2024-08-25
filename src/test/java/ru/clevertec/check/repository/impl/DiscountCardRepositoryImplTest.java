@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.check.exception.DataException;
 import ru.clevertec.check.model.DiscountCard;
 
 import java.sql.Connection;
@@ -15,6 +16,7 @@ import java.sql.SQLException;
 import java.util.Optional;
 
 import static org.assertj.core.api.Assertions.assertThat;
+import static org.assertj.core.api.Assertions.assertThatThrownBy;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
@@ -74,5 +76,17 @@ class DiscountCardRepositoryImplTest {
 
         // then
         assertThat(result).isNotPresent();
+    }
+
+    @Test
+    void shouldThrowDataExceptionWhenSQLException() throws SQLException {
+        // given
+        int cardNumber = 123;
+        when(connection.prepareStatement(DiscountCardRepositoryImpl.SELECT_DISCOUNT_CARD_BY_ID))
+                .thenThrow(new SQLException());
+
+        // when, then
+        assertThatThrownBy(() -> discountCardRepository.findByNumber(cardNumber))
+                .isInstanceOf(DataException.class);
     }
 }

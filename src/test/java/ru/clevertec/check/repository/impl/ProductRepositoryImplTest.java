@@ -6,6 +6,7 @@ import org.junit.jupiter.api.extension.ExtendWith;
 import org.mockito.InjectMocks;
 import org.mockito.Mock;
 import org.mockito.junit.jupiter.MockitoExtension;
+import ru.clevertec.check.exception.DataException;
 import ru.clevertec.check.exception.NotFoundException;
 import ru.clevertec.check.model.Product;
 
@@ -71,7 +72,19 @@ class ProductRepositoryImplTest {
         when(resultSet.next()).thenReturn(false);
 
         // when, then
-        assertThatThrownBy(() -> productRepository.findAllById(Arrays.asList(id)))
+        assertThatThrownBy(() -> productRepository.findAllById(List.of(id)))
                 .isInstanceOf(NotFoundException.class);
+    }
+
+    @Test
+    void shouldThrowDataExceptionWhenSQLExceptionOccurs() throws SQLException {
+        // given
+        Long id = 1L;
+        when(connection.prepareStatement(ProductRepositoryImpl.SELECT_PRODUCT_BY_ID))
+                .thenThrow(new SQLException());
+
+        // when, then
+        assertThatThrownBy(() -> productRepository.findAllById(List.of(id)))
+                .isInstanceOf(DataException.class);
     }
 }
