@@ -33,6 +33,13 @@ public class ApplicationBuilder {
 
     private final MainOrder mainOrder;
 
+    public static void run(String[] args) {
+        CommandLineArgumentContainer commandLineArgumentContainer = CommandLineArgumentResolver.splitArgs(args);
+        ApplicationBuilder applicationBuilder = new ApplicationBuilder(commandLineArgumentContainer.getSaveToFilePath(), commandLineArgumentContainer.getProperties());
+
+        applicationBuilder.mainOrder.processOrder(commandLineArgumentContainer.getAppArguments());
+    }
+
     private ApplicationBuilder(String saveToFilePath, Map<String, String> properties) {
         ArgMapper argMapper = new ArgMapper();
 
@@ -57,12 +64,5 @@ public class ApplicationBuilder {
         OrderService orderService = new OrderServiceImpl(productService, discountCardService, checkFactory);
 
         return new MainOrderController(orderService);
-    }
-
-    public static void run(String[] args) {
-        CommandLineArgumentContainer commandLineArgumentContainer = CommandLineArgumentResolver.splitArgs(args);
-        ApplicationBuilder applicationBuilder = new ApplicationBuilder(commandLineArgumentContainer.getSaveToFilePath(), commandLineArgumentContainer.getProperties());
-
-        applicationBuilder.mainOrder.processOrder(commandLineArgumentContainer.getAppArguments());
     }
 }

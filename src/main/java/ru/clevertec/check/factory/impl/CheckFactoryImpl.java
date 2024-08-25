@@ -25,15 +25,6 @@ public class CheckFactoryImpl implements CheckFactory {
         return getCheck(orderResponseList, discountCard);
     }
 
-    private void checkBalanceMoreThenCheckTotal(CheckBody checkBody, BigDecimal balance) {
-        BigDecimal totalPrice = checkBody.getTotalPrice().subtract(checkBody.getTotalDiscount());
-        boolean isMore = balance.compareTo(totalPrice) >= 0;
-
-        if (!isMore) {
-            throw new BalanceNotAvailableException();
-        }
-    }
-
     private List<OrderResponseDto> buildOrderResponseList(List<ProductInfo> productInfoList,
                                                           BalancedDiscountCard discountCard) {
         return productInfoList.stream()
@@ -54,6 +45,15 @@ public class CheckFactoryImpl implements CheckFactory {
         CheckTotal checkTotal = getTotal(checkBody);
 
         return buildCheck(getTitle(), checkBody, checkTotal, balancedDiscountCard);
+    }
+
+    private void checkBalanceMoreThenCheckTotal(CheckBody checkBody, BigDecimal balance) {
+        BigDecimal totalPrice = checkBody.getTotalPrice().subtract(checkBody.getTotalDiscount());
+        boolean isMore = balance.compareTo(totalPrice) >= 0;
+
+        if (!isMore) {
+            throw new BalanceNotAvailableException();
+        }
     }
 
     private CheckTitle getTitle() {

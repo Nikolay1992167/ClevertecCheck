@@ -22,12 +22,12 @@ import java.nio.file.Paths;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.ArgumentMatchers.eq;
 import static org.mockito.Mockito.doThrow;
-import static org.mockito.Mockito.mock;
 import static org.mockito.Mockito.verify;
 import static org.mockito.Mockito.when;
 
 @ExtendWith(MockitoExtension.class)
 class MainOrderImplTest {
+
     @InjectMocks
     private MainOrderImpl mainOrder;
 
@@ -42,6 +42,9 @@ class MainOrderImplTest {
 
     @Mock
     private Validator<String[]> validator;
+
+    @Mock
+    private FileCreationException fileCreationException;
 
     private final String filePath = "testFilePath";
 
@@ -73,19 +76,18 @@ class MainOrderImplTest {
     }
 
     @Test
-    void shouldHandlePrintableExceptionWhenThrown() {
+    void shouldThrowPrintableExceptionWhenArgsAreInvalid() {
         // given
         String[] args = {"invalidArg1"};
-        FileCreationException printableException = mock(FileCreationException.class);
         Path path = Paths.get(filePath);
 
-        doThrow(printableException).when(validator).validate(args);
+        doThrow(fileCreationException).when(validator).validate(args);
 
         // when
         mainOrder.processOrder(args);
 
         // then
         verify(printService).printToFile(eq(path), any(FileCreationException.class));
-        verify(printService).printToConsole(printableException);
+        verify(printService).printToConsole(fileCreationException);
     }
 }

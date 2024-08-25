@@ -44,4 +44,14 @@ class ValidatorImplTest {
         assertThatThrownBy(() -> validator.validatePathArgs(args))
                 .isInstanceOf(ValidationException.class);
     }
+
+    @Test
+    void shouldThrowValidationExceptionWhenBalanceNotExist() {
+        // given
+        String[] args = {"1-10", "discountCard=1234", "balanceDebitCard=qwerty", "extraInvalidArg"};
+
+        // when, then
+        assertThatThrownBy(() -> validator.validate(args))
+                .isInstanceOf(ValidationException.class);
+    }
 }
